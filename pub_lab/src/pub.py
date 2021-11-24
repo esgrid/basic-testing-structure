@@ -2,23 +2,16 @@ from src.drink import Drink
 from src.customer import Customer
 
 class Pub:
-    def __init__(self, name, till):
+    def __init__(self, name, till, drinks):
         self.name = name
         self.till = till
-        self.drink1 = Drink("Drink 1", 10, 5)
-        self.drink2 = Drink("Drink 2", 10, 4)
-        self.drink3 = Drink("Drink 3", 3, 1)
-        self.drink4 = Drink("Drink 4", 4, 4)
-        self.drink5 = Drink("Drink 5", 2, 2)
-        self.drinks = [
-                        {"drink": self.drink1, "stock": 1}, 
-                        {"drink": self.drink2, "stock": 2}, 
-                        {"drink": self.drink3, "stock": 1}, 
-                        {"drink": self.drink4, "stock": 3}, 
-                        {"drink": self.drink5, "stock": 0}
-                    ]
+        self.drinks = drinks
         # formula for drunkenness
         # drunkenness = sum of alcohol levels of customer.body
+        
+    def increase_till(self, price):
+        self.till += price
+    
     def decrease_stock(self, drink_sold):
         for drink in self.drinks:
             if drink["drink"] == drink_sold:
@@ -29,7 +22,7 @@ class Pub:
 
     def add_stock(self, add_drink, additional_stock):
         for drink in self.drinks:
-            if drink["drink"] == add_drink:
+            if drink["drink"].name == add_drink.name:
                 drink["stock"] += additional_stock
 
     def sell_drink(self, drink_wanted, customer):
