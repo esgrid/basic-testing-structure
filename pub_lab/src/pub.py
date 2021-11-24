@@ -12,6 +12,9 @@ class Pub:
     def increase_till(self, price):
         self.till += price
     
+    def get_drink_by_name(self, drink_name):
+        return [drink["drink"] for drink in self.drinks if drink["drink"].name == drink_name][0]
+
     def decrease_stock(self, drink_sold):
         for drink in self.drinks:
             if drink["drink"] == drink_sold:
@@ -24,6 +27,9 @@ class Pub:
         for drink in self.drinks:
             if drink["drink"].name == add_drink.name:
                 drink["stock"] += additional_stock
+
+    def given_drink_stock(self, given_drink):
+        return sum([drink["stock"] for drink in self.drinks if drink["drink"].name == given_drink.name])
 
     def sell_drink(self, drink_wanted, customer):
         drunk_limit = 10

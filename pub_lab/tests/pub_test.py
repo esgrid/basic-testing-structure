@@ -20,7 +20,7 @@ class TestPub(unittest.TestCase):
                     ]
         self.pub = Pub("The Prancing Pony", 100.00, self.drinks)
 
-    @unittest.skip("Delete or comment to run test")
+    # @unittest.skip("Delete or comment to run test")
     def test_pub_has_name(self):
         self.assertEqual("The Prancing Pony", self.pub.name)
         
@@ -34,13 +34,19 @@ class TestPub(unittest.TestCase):
         self.pub.increase_till(self.drinks[1]["drink"].price)
         self.assertEqual(110, self.pub.till)
 
+    # @unittest.skip("Delete or comment to run test")
     def test_pub_add_stock(self):
-        self.pub.add_stock(Drink("Drink 5", 2, 2), 2)
-        self.assertEqual(2, self.pub.drinks[4]["stock"])
+        self.pub.add_stock(self.drink5, 3)
+        self.assertEqual(3, self.pub.drinks[4]["stock"])
 
-    @unittest.skip("Delete or comment to run test")
+    # @unittest.skip("Delete or comment to run test")
     def test_pub_drink_stock(self):
-        pass
+        self.pub.add_stock(self.drink5, 2)
+        self.assertEqual(2, self.pub.given_drink_stock(self.drink5))
+
+    # @unittest.skip("Delete or comment to run test")
+    def test_get_drink_by_name(self):
+        self.assertEqual("Drink 4", self.pub.get_drink_by_name("Drink 4").name)
 
     @unittest.skip("Delete or comment to run test")
     def test_pub_sell_drink(self):
