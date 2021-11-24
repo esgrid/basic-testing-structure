@@ -17,7 +17,7 @@ class TestPub(unittest.TestCase):
         self.pub.sell_drink(drink, customer)
         self.assertEqual(self.pub.drinks[0]["stock"], 0)
         
-
+    @unittest.skip 
     def test_pub_acquire_drink(self):
         pass
 
