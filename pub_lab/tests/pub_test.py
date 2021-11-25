@@ -72,7 +72,6 @@ class TestPub(unittest.TestCase):
     def test_pub_sell_food(self):
         food = Food("Food 1", 10, 3)
         customer = Customer("José Pablo", [], 100.00, 18)
-        
         self.pub.sell_drink(self.drink2, customer, 1)
         self.pub.sell_food(food, customer)
         self.assertEqual(80, customer.wallet)
