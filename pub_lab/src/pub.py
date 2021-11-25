@@ -15,12 +15,12 @@ class Pub:
     def get_drink_by_name(self, drink_name):
         return [drink["drink"] for drink in self.drinks if drink["drink"].name == drink_name][0]
 
-    def decrease_stock(self, drink_sold):
+    def decrease_stock(self, drink_sold, sold_stock):
         for drink in self.drinks:
             if drink["drink"] == drink_sold:
-                drink["stock"] -=1 
+                drink["stock"] -= sold_stock 
 
-    def add_new_drink(self,drink, stock):
+    def add_new_drink(self, drink, stock):
         self.drinks.append({"drink": drink, "stock": stock})
 
     def add_stock(self, add_drink, additional_stock):
@@ -31,13 +31,12 @@ class Pub:
     def given_drink_stock(self, given_drink):
         return sum([drink["stock"] for drink in self.drinks if drink["drink"].name == given_drink.name])
 
-    def sell_drink(self, drink_wanted, customer):
+    def sell_drink(self, drink_wanted, customer, num_drinks):
         drunk_limit = 10
         for drink in self.drinks:
-            if drink["stock"] > 0 and drink["drink"] == drink_wanted and customer.wallet >= drink_wanted.price and customer.drunkenness < drunk_limit - drink_wanted.alcoholic_status:
-                self.till += drink_wanted.price
-                self.decrease_stock(drink["drink"])
-                customer.buy_drink(drink["drink"])
+            if (drink["stock"] > 0) and (drink["drink"].name == drink_wanted.name) and (customer.wallet >= drink_wanted.price) and (customer.drunkenness < (drunk_limit - drink_wanted.alcoholic_status)) and (customer.age >= 18):
+                self.increase_till(drink_wanted.price)
+                self.decrease_stock(drink["drink"], num_drinks)
                 customer.decrease_wallet(drink["drink"])
                 customer.add_drink_to_body(drink["drink"])
                 customer.raise_drunkenness()

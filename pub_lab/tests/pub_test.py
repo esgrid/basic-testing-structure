@@ -39,6 +39,10 @@ class TestPub(unittest.TestCase):
         self.pub.add_stock(self.drink5, 3)
         self.assertEqual(3, self.pub.drinks[4]["stock"])
 
+    def test_decrease_stock(self):
+        self.pub.decrease_stock(self.drink2, 1)
+        self.assertEqual(1, self.pub.drinks[1]["stock"])
+
     # @unittest.skip("Delete or comment to run test")
     def test_pub_drink_stock(self):
         self.pub.add_stock(self.drink5, 2)
@@ -48,9 +52,12 @@ class TestPub(unittest.TestCase):
     def test_get_drink_by_name(self):
         self.assertEqual("Drink 4", self.pub.get_drink_by_name("Drink 4").name)
 
-    @unittest.skip("Delete or comment to run test")
+    # @unittest.skip("Delete or comment to run test")
     def test_pub_sell_drink(self):
-        drink = Drink("Drink 1", 10, 5)
-        customer = Customer("José Pablo", [], 100.00)
-        self.pub.sell_drink(drink, customer)
-        self.assertEqual(self.pub.drinks[0]["stock"], 0)
+        customer = Customer("José Pablo", [], 100.00, 18)
+        self.pub.sell_drink(self.drink1, customer, 1)
+        self.assertEqual(0, self.pub.drinks[0]["stock"])
+        self.assertEqual(110.00, self.pub.till)
+        self.assertEqual(self.drink1.name, customer.body[0].name)
+        self.assertEqual(90, customer.wallet)
+        self.assertEqual(5, customer.drunkenness)
