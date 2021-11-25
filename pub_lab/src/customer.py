@@ -10,8 +10,12 @@ class Customer:
     def add_drink_to_body(self, drink):
         self.body.append(drink)
     
-    def decrease_wallet(self, drink):
-        self.wallet -= drink.price
+    def decrease_wallet(self, price):
+        self.wallet -= price
 
     def raise_drunkenness(self):
         self.drunkenness = sum([drink.alcoholic_status for drink in self.body])
+    
+    def decrease_drunkenness(self, dedrunkenness_level):
+        self.drunkenness -= dedrunkenness_level
+        return self.drunkenness

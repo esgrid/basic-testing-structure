@@ -2,6 +2,7 @@ import unittest
 from src.pub import Pub
 from src.drink import Drink
 from src.customer import Customer
+from src.food import Food
 
 class TestPub(unittest.TestCase):
     
@@ -52,6 +53,12 @@ class TestPub(unittest.TestCase):
     def test_get_drink_by_name(self):
         self.assertEqual("Drink 4", self.pub.get_drink_by_name("Drink 4").name)
 
+    def test_all_stock_value(self):
+        total_value = sum([drink["stock"]*drink["drink"].price for drink in self.drinks])
+        total_value -= self.drink5.price*1
+        self.pub.decrease_stock(self.drink5, 1)
+        self.assertEqual(total_value, self.pub.total_stock_value())
+
     # @unittest.skip("Delete or comment to run test")
     def test_pub_sell_drink(self):
         customer = Customer("José Pablo", [], 100.00, 18)
@@ -61,3 +68,12 @@ class TestPub(unittest.TestCase):
         self.assertEqual(self.drink1.name, customer.body[0].name)
         self.assertEqual(90, customer.wallet)
         self.assertEqual(5, customer.drunkenness)
+
+    def test_pub_sell_food(self):
+        food = Food("Food 1", 10, 3)
+        customer = Customer("José Pablo", [], 100.00, 18)
+        
+        self.pub.sell_drink(self.drink2, customer, 1)
+        self.pub.sell_food(food, customer)
+        self.assertEqual(80, customer.wallet)
+        self.assertEqual(1, customer.drunkenness)
