@@ -34,7 +34,9 @@ class Pub:
 
     def sell_drink(self, drink_wanted, customer, num_drinks):
         for drink in self.drinks:
-            if (drink["stock"] > 0) and (drink["drink"].name == drink_wanted.name) and (customer.wallet >= drink_wanted.price) and (customer.drunkenness < (self.max_drunk_level - drink_wanted.alcoholic_status)) and (customer.age >= 18):
+            if (drink["stock"] > 0) and (drink["drink"].name == drink_wanted.name) and \
+                (customer.wallet >= drink_wanted.price) and \
+                (customer.drunkenness < (self.max_drunk_level - drink_wanted.alcoholic_status)) and (customer.age >= 18):
                 self.increase_till(drink_wanted.price)
                 self.decrease_stock(drink["drink"], num_drinks)
                 customer.decrease_wallet(drink["drink"].price)
@@ -47,4 +49,5 @@ class Pub:
     def sell_food(self, food, customer):
         customer.decrease_wallet(food.price)
         self.increase_till(food.price)
-        customer.drunkenness = 0 if customer.drunkenness <= food.dedrunkenness_level else customer.decrease_drunkenness(food.dedrunkenness_level)
+        customer.drunkenness = 0 if customer.drunkenness <= food.dedrunkenness_level else \
+            customer.decrease_drunkenness(food.dedrunkenness_level)
